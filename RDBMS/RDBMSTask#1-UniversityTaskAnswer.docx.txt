@@ -1,0 +1,250 @@
+Internship Task - RDBMS and SQL Task #1
+
+(1) Create Database
+ Query=>
+CREATE DATABASE University;
+
+(2)Use Database
+ Query=>
+use university;
+
+(3)create table Departments
+Query=>
+CREATE TABLE Departments(
+department_id INT PRIMARY KEY,
+department_name VARCHAR(100) NOT NULL
+);
+
+(4)create table Professors
+Query=>
+CREATE TABLE Professors(
+professor_id INT Primary key,
+first_name VARCHAR(100) NOT NULL,
+last_name VARCHAR(100) NOT NULL,
+email VARCHAR(100) NOT NULL, 
+phone VARCHAR(20) NOT NULL
+);
+
+(5)Create table Courses
+Query=>
+CREATE TABLE Courses(
+course_id INT Primary key,
+course_name VARCHAR(100) NOT NULL,
+department_id INT NOT NULL,
+Foreign key (department_id) REFERENCES
+departments(department_id),
+professor_id INT NOT NULL, 
+Foreign key (professor_id) REFERENCES
+Professors(professor_id),
+credits INT NOT NULL
+);
+
+(6)Create table Students
+Query=>
+CREATE TABLE Students(
+student_id INT Primary key,
+first_name VARCHAR(100) NOT NULL, 
+last_name VARCHAR(100) NOT NULL,
+email VARCHAR(100) NOT NULL,
+phone VARCHAR(20) NOT NULL,
+date_of_birth DATE NOT NULL,
+enrollment_date DATE NOT NULL,
+department_id INT NOT NULL,
+Foreign key (department_id) REFERENCES
+departments(department_id)
+);
+
+(7)Create table Enrollments
+Query=>
+CREATE TABLE Enrollments(
+enrollment_id INT Primary key,
+student_id INT NOT NULL,
+Foreign key (student_id) REFERENCES
+Students(student_id),
+course_id INT NOT NULL,
+Foreign key (course_id) REFERENCES
+Courses(course_id),
+enrollment_date DATE NOT NULL,
+grade VARCHAR(5) NOT NULL
+);
+
+(8)Insert data in table Departments
+Query=>
+INSERT INTO Departments VALUES(101,'MANAGEMENT'),
+(102,'ADMIN'),
+(103,'IT'),
+(104,'PHARMACY'),
+(105,'MATHEMATICS'),
+(106,'PHYSICS'),
+(107,'CHEMISTRY'),
+(108,'NURSING'),
+(109,'COMPUTER SCIENCE'),
+(110,'FINANCE');
+
+
+(9)Insert data in table Professors
+Query=>
+INSERT INTO Professors VALUES(1001,'Dr.AMAN','SAXSENA','amansaxsena22@gmail.com','8958978949'),
+(1002,'SANJAY''SAHU','SAXSENA','sanjaysahu12@gmail.com','9958678949'),
+(1003,'Dr.PURNIMA','RAJPUT','rajputpurnima34@gmail.com','7858908949'),
+(1004,'SHIV','AGARWAL','shivagarwal90@gmail.com','9758600949'),
+(1005,'MAHI','PAWAR','pawarmahi89@gmail.com','9658678049'),
+(1006,'SWATI','TOMAR','swatitomar2@gmail.com','7758679949'),
+(1007,'TRAPTI','SINGH','traptisingh67@gmail.com','7957678949'),
+(1008,'KARTIK','PATIDAR','kartikpatidar55@gmail.com','8858676649'),
+(1009,'SHREENIWAS','SOLANKI','shreeniwas234@gmail.com','8958778949'),
+(1010,'Dr.AZHAR','KHAN','azharkhan789@gmail.com','9958689949');
+
+(9)Insert data in table Courses
+Query=>
+INSERT INTO Courses VALUES(201,'FUNDAMENTAL OF MANAGEMENT',101,1001,2),
+ (202,'PROGRAMING LANGUAGE',102,1002,3),
+ (203,'DATA ALGORITHAM & DATA STRUCTURE',103,1003,4),
+ (204,'MACHINE LEARNING',104,1004,3),
+ (205,'INTRODUCTION OF PHARMACY',105,1005,2), 
+(206,'OBJECT ORIENTED PROGRAMMING',106,1006,4), 
+(207,'DBMS',107,1007,5),
+ (208,'JAVASCRIPT',108,1008,3),
+ (209,'ENGLISH',109,1009,5), 
+(210,'HTML',110,1010,4);
+
+(10)Insert data in table Students
+Query=>
+INSERT INTO Students VALUES(2201,'SEEMA','SAHU','seemasahu12@gmail.com',9354678567,'2001-01-06','2022-03-08',101),
+(2202,'RIYA','RAJPUT','rajputriya34@gmail.com',9867342545,'2000-02-11','2021-07-22',102),
+(2203,'ASHUTOSH','ROY','ashutoshroy5@gmail.com',7895678990,'1999-05-23','2022-08-06',103),
+(2204,'ADITYA','KASHYAP','adityakashyap67@gmail.com',7980567845,'1999-10-11','2023-09-05',104),
+(2205,'SHIVANI','SINGH','shivanisingh@gmail.com',9067456789,'2002-12-22','2020-11-12',105), 
+(2206,'FARHAD','KHAN','khanfarhad@gmailcom',8090674534,'2000-12-17','2021-05-08',106), 
+(2207,'ADITI','GUPTA','guptaaditi23@gmail.com',7456235678,'1999-07-08','2024-09-13',107),
+(2208,'ABHISHEK','JANGID','jangidabhishek34@gmail.com',8756342345,'1998-07-11','2023-08-03',108),
+(2209,'NITIN','SHARMA','nitinsharma345@gmail.com',8567890756,'2004-09-28','2019-09-14',109), 
+(2210,'sanskriti','pare','paresanskriti23@gmail.com',7089567656,'1997-09-04','2019-09-27',110);
+
+(11)Insert data in table Enrollments
+Query=>
+INSERT INTO Enrollments VALUES(3001,2201,201,'2023-09-11','A'),
+(3002,2202,202,'2024-12-21','B'),
+(3003,2203,203,'2022-11-18','A+'),
+(3004,2204,204,'2021-10-19','B+'),
+(3005,2205,205,'2020-07-09','C'),
+(3006,2206,206,'2024-08-05','A'),
+(3007,2207,207,'2023-09-24','C+'),
+(3008,2208,208,'2019-07-28','D'),
+(3009,2209,209,'2020-05-09','B'),
+(3010,2210,210,'2021-01-08','C');
+==========================================================================================================================================
+
+SQL Queries for the Case Study
+
+1. Find the Total Number of Students in Each Department
+Query=>
+SELECT department_name, COUNT(student_id) AS total_students
+FROM Students
+JOIN Departments ON Students.department_id = Departments.department_id
+GROUP BY department_name;
+
+
+2. List All Courses Taught by a Specific Professor
+Query=>SELECT course_name
+FROM Courses
+WHERE professor_id = 1001; 
+
+
+
+3. Find the Average Grade of Students in Each Course
+Query=>SELECT course_id, AVG(
+    CASE
+        WHEN grade = 'A+' THEN 4.0
+        WHEN grade = 'A' THEN 4.0
+        WHEN grade = 'B+' THEN 3.5
+        WHEN grade = 'B' THEN 3.0
+        WHEN grade = 'C+' THEN 2.5
+        WHEN grade = 'C' THEN 2.0
+        WHEN grade = 'D' THEN 1.0
+        ELSE 0
+    END) AS average_grade
+FROM Enrollments
+GROUP BY course_id;
+
+
+
+4. List All Students Who Have Not Enrolled in Any Courses
+Query=>SELECT first_name, last_name, email
+FROM Students
+WHERE student_id NOT IN (SELECT DISTINCT student_id FROM Enrollments);
+
+
+
+5. Find the Number of Courses Offered by Each Department
+Query=>SELECT department_name, COUNT(course_id) AS total_courses
+FROM Courses
+JOIN Departments ON Courses.department_id = Departments.department_id
+GROUP BY department_name;
+
+
+
+6. List All Students Who Have Taken a Specific Course (e.g., 'Database Systems')
+Query=>SELECT first_name, last_name, email
+FROM Students
+JOIN Enrollments ON Students.student_id = Enrollments.student_id
+JOIN Courses ON Enrollments.course_id = Courses.course_id
+WHERE course_name = 'OBJECT ORIENTED PROGRAMMING';  
+
+
+7. Find the Most Popular Course Based on Enrollment Numbers
+Query=>SELECT course_name, COUNT(student_id) AS enrollment_count
+FROM Enrollments
+JOIN Courses ON Enrollments.course_id = Courses.course_id
+GROUP BY course_name
+ORDER BY enrollment_count DESC
+LIMIT 1;
+
+
+
+8. Find the Average Number of Credits Per Student in a Department
+Query=>SELECT department_name, AVG(credits) AS average_credits
+FROM Enrollments
+JOIN Courses ON Enrollments.course_id = Courses.course_id
+JOIN Departments ON Courses.department_id = Departments.department_id
+GROUP BY department_name;
+
+
+
+9. List All Professors Who Teach in More Than One Department
+Query=>
+SELECT first_name, last_name, email,COUNT(DISTINCT courses.department_id) AS department_Count
+FROM Professors
+JOIN Courses ON Professors.professor_id = Courses.professor_id
+GROUP BY professors.professor_Id
+HAVING COUNT(DISTINCT courses.department_id) > 1;
+
+
+10. Get the Highest and Lowest Grade in a Specific Course (e.g., 'Operating Systems')
+Query=>SELECT course_name,
+       MAX(CASE 
+               WHEN grade = 'A+' THEN 4.0
+               WHEN grade = 'A' THEN 4.0
+               WHEN grade = 'B+' THEN 3.5
+               WHEN grade = 'B' THEN 3.0
+               WHEN grade = 'C+' THEN 2.5
+               WHEN grade = 'C' THEN 2.0
+               WHEN grade = 'D' THEN 1.0
+               ELSE 0
+           END) AS highest_grade,
+       MIN(CASE 
+               WHEN grade = 'A+' THEN 4.0
+               WHEN grade = 'A' THEN 4.0
+               WHEN grade = 'B+' THEN 3.5
+               WHEN grade = 'B' THEN 3.0
+               WHEN grade = 'C+' THEN 2.5
+               WHEN grade = 'C' THEN 2.0
+               WHEN grade = 'D' THEN 1.0
+               ELSE 0
+           END) AS lowest_grade
+FROM Enrollments
+JOIN Courses ON Enrollments.course_id = Courses.course_id
+WHERE course_name = 'MACHINE LEARNING';  -- Replace 'MACHINE LEARNING' with the desired course name
+
+
+===========================================================================================================================================

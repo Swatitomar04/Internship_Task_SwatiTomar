@@ -1,0 +1,213 @@
+Internship Task - RDBMS and SQL Task #4
+
+(1)create database
+query=>
+CREATE DATABASE  hr_managment;
+
+(2)Use Database
+query=>
+use  hr_managment;
+
+(3)create table Employees
+query=>
+CREATE TABLE Employees (
+    EmployeeID INT AUTO_INCREMENT NOT NULL,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Phone VARCHAR(15) NOT NULL,
+    HireDate DATE NOT NULL,
+    DepartmentID INT NOT NULL,
+    ManagerID INT,
+    Salary DECIMAL(10, 2),
+    PRIMARY KEY (EmployeeID),
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID) ON DELETE CASCADE ON   UPDATE CASCADE,
+    FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID) ON DELETE SET NULL ON UPDATE CASCADE);
+
+
+(4)create table Departments
+query=>
+CREATE TABLE Departments ( 
+    DepartmentID INT NOT NULL, 
+    DepartmentName VARCHAR(100) NOT NULL,
+    PRIMARY KEY (DepartmentID) 
+);
+
+(5)create table PerformanceReviews
+query=>
+CREATE TABLE PerformanceReviews (
+    ReviewID INT AUTO_INCREMENT NOT NULL,
+    EmployeeID INT NOT NULL,
+    ReviewDate DATE NOT NULL,
+    PerformanceScore VARCHAR(15) NOT NULL,
+    Comments VARCHAR(255) NOT NULL,
+    PRIMARY KEY (ReviewID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+);
+
+(6)create table Payroll
+query=>
+CREATE TABLE Payroll(
+ PayrollID int AUTO_INCREMENT NOT NULL,
+ EmployeeID int NOT NULL,
+ PaymentDate date NOT NULL,
+ Amount DECIMAL (10,2),
+ PaymentMethod varchar(255),
+ PRIMARY KEY (PayrollID),
+ FOREIGN KEY (EmployeeID) REFERENCES employees (EmployeeID))
+
+(7)insert data in in employees table
+query=>
+
+INSERT INTO Employees () VALUES
+('John', 'Doe', 'johndoe@example.com', '1234567890', '2020-01-15', 1, NULL, 60000),  -- Manager of HR (No manager assigned)
+('Jane', 'Smith', 'janesmith@example.com', '1234567891', '2021-03-22', 2, NULL, 75000),  -- Manager of Finance (No manager assigned)
+('Michael', 'Johnson', 'michaelj@example.com', '1234567892', '2019-08-12', 3, NULL, 80000),  -- Manager of IT (No manager assigned)
+('Emily', 'Davis', 'emilydavis@example.com', '1234567893', '2022-07-05', 4, NULL, 55000),  -- Manager of Sales (No manager assigned)
+('Chris', 'Brown', 'chrisbrown@example.com', '1234567894', '2020-06-30', 5, NULL, 70000),  -- Manager of Marketing (No manager assigned)
+('Jessica', 'Wilson', 'jessicawilson@example.com', '1234567895', '2021-11-18', 6, NULL, 65000),  -- Manager of Operations (No manager assigned)
+('Matthew', 'Moore', 'matthewmoore@example.com', '1234567896', '2018-02-25', 7, NULL, 72000),  -- Manager of Customer Support (No manager assigned)
+('Olivia', 'Taylor', 'oliviataylor@example.com', '1234567897', '2019-05-19', 8, NULL, 90000),  -- Manager of R&D (No manager assigned)
+('David', 'Anderson', 'davidanderson@example.com', '1234567898', '2020-10-14', 9, NULL, 85000),  -- Manager of Legal (No manager assigned)
+('Sophia', 'Thomas', 'sophiathomas@example.com', '1234567899', '2021-12-01', 10, NULL, 78000);  -- Manager of Procurement (No manager assigned)
+
+
+(8)insert data in in Departments table
+query=>
+INSERT INTO Departments () VALUES
+(1, 'Human Resources', NULL), 
+(2, 'Finance', NULL), 
+(3, 'IT', NULL),             
+(4, 'Sales', NULL), 
+(5, 'Marketing', NULL),           
+(6, 'Operations', NULL),               
+(7, 'Customer Support', NULL),       
+(8, 'Research and Development', NULL),
+(9, 'Legal', NULL), 
+(10, 'Procurement', NULL);  
+
+(9)insert data in payroll table 
+query=>
+INSERT INTO Payroll (EmployeeID, PaymentDate, Amount, PaymentMethod) VALUES
+(31, '2025-01-01', 60000, 'Bank Transfer'),  -- John Doe (HR Department)
+(32, '2025-01-01', 75000, 'Check'),          -- Jane Smith (Finance Department)
+(33, '2025-01-01', 80000, 'Bank Transfer'),  -- Michael Johnson (IT Department)
+(34, '2025-01-01', 55000, 'Check'),          -- Emily Davis (Sales Department)
+(35, '2025-01-01', 70000, 'Bank Transfer'),  -- Chris Brown (Marketing Department)
+(36, '2025-01-01', 65000, 'Check'),          -- Jessica Wilson (Operations Department)
+(37, '2025-01-01', 72000, 'Bank Transfer'),  -- Matthew Moore (Customer Support Department)
+(38, '2025-01-01', 90000, 'Check'),          -- Olivia Taylor (R&D Department)
+(39, '2025-01-01', 85000, 'Bank Transfer'),  -- David Anderson (Legal Department)
+(40, '2025-01-01', 78000, 'Check');         -- Sophia Thomas (Procurement Department)
+
+(10)insert data in performancereviews table
+query=>
+INSERT INTO PerformanceReviews () VALUES
+(1,31 ,'2025-01-10', 'Excellent', 'Outstanding performance in HR management, consistently exceeding expectations.'), 
+(2,32,'2025-01-10', 'Good', 'Strong performance in Finance, good team player and manager.'),  
+(3,33 ,'2025-01-10', 'Excellent', 'Consistently performs well in IT, resolves technical issues quickly and efficiently.'),  
+(4,34, '2025-01-10', 'Good', 'Good sales numbers and leadership, could improve team engagement.'),  -- Emily Davis (Sales)
+(5,35, '2025-01-10', 'Average', 'Marketing efforts have been average, some room for improvement in campaigns.'),  
+(6,36, '2025-01-10', 'Excellent', 'Great leadership in Operations, highly organized and productive team.'), 
+(7,37, '2025-01-10', 'Good', 'Good performance in customer support, responds to inquiries in a timely manner.'), 
+(8,38, '2025-01-10', 'Excellent', 'Highly innovative in R&D, leads projects with creativity and efficiency.'),  
+(9,39, '2025-01-10', 'Good', 'Solid performance in legal, meets deadlines and provides good legal counsel.'), 
+(10,40,'2025-01-10', 'Average', 'Procurement department is doing well, but there is potential for better vendor relationships.' ); 
+
+
+
+(11)update manager rows in department table 
+query=>
+UPDATE Departments SET ManagerID = 31 WHERE DepartmentID = 1; UPDATE Departments SET ManagerID = 32 WHERE DepartmentID = 2; UPDATE Departments SET ManagerID = 33 WHERE DepartmentID = 3;  UPDATE Departments SET ManagerID = 34 WHERE DepartmentID = 4;  UPDATE Departments SET ManagerID = 35 WHERE DepartmentID = 5;  
+UPDATE Departments SET ManagerID = 36 WHERE DepartmentID = 6;  UPDATE Departments SET ManagerID = 37 WHERE DepartmentID = 7;  UPDATE Departments SET ManagerID = 38 WHERE DepartmentID = 8;  UPDATE Departments SET ManagerID = 39 WHERE DepartmentID = 9; UPDATE Departments SET ManagerID = 40 WHERE DepartmentID = 10; 
+
+=================================================================================================================================================================================================================
+SQL Queries for the Case Study
+
+01) Retrieve the names and contact details of employees hired after January 1, 2023.
+query=>
+==>SELECT FirstName, LastName, Email, Phone, HireDate
+FROM Employees
+WHERE HireDate > '2023-01-01';
+
+
+02)Find the total payroll amount paid to each department.
+query=>
+==>SELECT D.DepartmentName, SUM(P.Amount) AS TotalPayroll
+FROM Payroll P
+JOIN Employees E ON P.EmployeeID = E.EmployeeID
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName;
+
+
+03)List all employees who have not been assigned a manager.
+query=>
+==>SELECT FirstName, LastName, DepartmentID, ManagerID
+FROM Employees
+WHERE ManagerID IS NULL;
+
+
+04) Retrieve the highest salary in each department along with the employee’s name.
+query=>
+==>SELECT D.DepartmentName, E.FirstName, E.LastName, E.Salary
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE E.Salary = (
+    SELECT MAX(Salary)
+    FROM Employees
+    WHERE DepartmentID = E.DepartmentID
+);
+
+
+05)Find the most recent performance review for each employee.
+query=>
+==>SELECT E.FirstName, E.LastName, PR.ReviewDate, PR.PerformanceScore, PR.Comments
+FROM Employees E
+JOIN PerformanceReviews PR ON E.EmployeeID = PR.EmployeeID
+WHERE PR.ReviewDate = (
+    SELECT MAX(ReviewDate)
+    FROM PerformanceReviews
+    WHERE EmployeeID = E.EmployeeID
+);
+
+
+06)Count the number of employees in each department.
+query=>
+==>SELECT D.DepartmentName, COUNT(E.EmployeeID) AS EmployeeCount
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName;
+
+
+07)List all employees who have received a performance score of "Excellent." Identify the most frequently used payment method in payroll.
+query=>
+7.1)-Employees who received an "Excellent" performance score:
+==>SELECT E.FirstName, E.LastName, PR.PerformanceScore
+FROM Employees E
+JOIN PerformanceReviews PR ON E.EmployeeID = PR.EmployeeID
+WHERE PR.PerformanceScore = 'Excellent';
+
+7.2)-Most frequently used payment method in payroll:
+==>SELECT PaymentMethod, COUNT(*) AS Frequency
+FROM Payroll
+GROUP BY PaymentMethod
+ORDER BY Frequency DESC
+LIMIT 1;
+
+
+08)Retrieve the top 5 highest-paid employees along with their departments.
+query=>
+==>SELECT E.FirstName, E.LastName, E.Salary, D.DepartmentName
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+ORDER BY E.Salary DESC
+LIMIT 5;
+
+
+09)Show details of all employees who report directly to a specific manager (e.g., ManagerID = 101).
+query=>
+==>SELECT E.FirstName, E.LastName, E.Email, E.Phone, D.DepartmentName
+FROM Employees E
+JOIN Departments D ON E.DepartmentID = D.DepartmentID
+WHERE E.ManagerID = 101;
+
